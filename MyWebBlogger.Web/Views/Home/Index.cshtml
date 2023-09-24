@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<spline-viewer loading-anim url="https://prod.spline.design/TNdraM2YDTBXBT8q/scene.splinecode"></spline-viewer>
+<div id="spline-spinner" class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+</div>
+
+<script>
+    setTimeout(() => {
+        document.getElementById("spline-spinner").remove();
+        console.log(document.getElementById("spline-spinner"))
+    },3500)
+</script>

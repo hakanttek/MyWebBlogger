@@ -1,0 +1,19 @@
+﻿@using Microsoft.EntityFrameworkCore;
+@using MyWebBlogger.Domain.Projects;
+<div class="container text-center">
+    <div class="row column-gap-4 row-gap-4">
+    @foreach(Project project in Model) {
+        <div class="col-5">
+            <div class="card">
+                <div class="card-header">@project.Name</div>
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted text-end">@project.CreatedDate.ToString("MMM yyyy")</h6>
+                    <p class="card-text text-start">@project.Description</p>
+                    <a href="@project.URI" class="card-link">More..</a>
+                        <a href="@project.InstitutionURI" class="card-link">@project.InstitutionsName</a>
+                </div>
+            </div>
+        </div>
+    }
+    </div>
+</div>

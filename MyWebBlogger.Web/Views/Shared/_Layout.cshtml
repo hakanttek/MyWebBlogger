@@ -1,0 +1,152 @@
+﻿@using MyWebBlogger.Web.Models.Component;
+@using MyWebBlogger.Web.Models.Home;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MyWebBlogger</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/MyWebBlogger.Web.styles.css" asp-append-version="true" />
+    @{
+        string uri = "https://cdn.jsdelivr.net/npm/@docsearch/css@3";
+    }
+    <link rel="stylesheet" href="~/css/color-modes.css">
+    @{
+        uri = "https://unpkg.com/@splinetool/viewer@0.9.436/build/spline-viewer.js";
+    }
+    <script type="module" src="@uri"></script>
+
+    <!-- Core build with no theme, formatting, non-essential modules -->
+    <link href="~/css/quill.snow.css" rel="stylesheet">
+</head>
+<body>
+    <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+        <symbol id="check2" viewBox="0 0 16 16">
+            <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
+        </symbol>
+        <symbol id="circle-half" viewBox="0 0 16 16">
+            <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z" />
+        </symbol>
+        <symbol id="moon-stars-fill" viewBox="0 0 16 16">
+            <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z" />
+            <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z" />
+        </symbol>
+        <symbol id="sun-fill" viewBox="0 0 16 16">
+            <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z" />
+        </symbol>
+    </svg>
+
+    <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
+        <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center"
+                id="bd-theme"
+                type="button"
+                aria-expanded="false"
+                data-bs-toggle="dropdown"
+                aria-label="Toggle theme (auto)">
+            <svg class="bi my-1 theme-icon-active" width="1em" height="1em"><use href="#circle-half"></use></svg>
+            <span class="visually-hidden" id="bd-theme-text">Toggle theme</span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="bd-theme-text">
+            <li>
+                <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="false">
+                    <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em"><use href="#sun-fill"></use></svg>
+                    Light
+                    <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="true">
+                    <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em"><use href="#moon-stars-fill"></use></svg>
+                    Dark
+                    <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
+                </button>
+            </li>
+            <li>
+                <button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="auto" aria-pressed="false">
+                    <svg class="bi me-2 opacity-50 theme-icon" width="1em" height="1em"><use href="#circle-half"></use></svg>
+                    Auto
+                    <svg class="bi ms-auto d-none" width="1em" height="1em"><use href="#check2"></use></svg>
+                </button>
+            </li>
+        </ul>
+    </div>
+    
+    <nav class="navbar navbar-expand-lg bg-body-tertiary rounded shadow" aria-label="Thirteenth navbar example">
+        <div class="container-fluid">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample11" aria-controls="navbarsExample11" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse d-lg-flex" id="navbarsExample11">
+                <svg width="30" height="40" viewBox="0 0 30 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <mask id="mask0_1_2" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="30" height="40">
+                        <path d="M30 0H0V40H30V0Z" fill="white" />
+                    </mask>
+                    <g mask="url(#mask0_1_2)">
+                        <path d="M7.02668 24.1181C8.18225 22.2229 9.81288 20.7857 11.6973 20.0015C9.81691 19.2209 8.18932 17.7886 7.03554 15.8988C5.88174 14.0091 5.25769 11.7536 5.24807 9.43852C5.24807 9.42644 5.24605 9.41671 5.24605 9.40798L5.24807 0.000983323H0V40H5.24807L5.24605 30.593C5.24605 30.5846 5.24807 30.5748 5.24807 30.5624C5.25864 28.2541 5.87939 26.005 7.02668 24.1181Z" fill="url(#paint0_linear_1_2)" />
+                        <path d="M14.9936 19.2849C17.2489 19.2654 19.4072 18.2188 21.0025 16.3709C22.5978 14.523 23.5022 12.0221 23.5203 9.40801V0.00369259L18.265 6.09121V9.40701C18.2781 9.91436 18.2031 10.4196 18.0446 10.8927C17.886 11.3658 17.6472 11.7973 17.3422 12.1615C17.0372 12.5257 16.6722 12.8152 16.2689 13.013C15.8656 13.2107 15.4321 13.3126 14.9942 13.3126C14.5563 13.3126 14.1228 13.2107 13.7195 13.013C13.3162 12.8152 12.9512 12.5257 12.6462 12.1615C12.3412 11.7973 12.1024 11.3658 11.9439 10.8927C11.7853 10.4196 11.7104 9.91436 11.7234 9.40701V6.08148L6.48198 0V9.40701C6.49487 12.02 7.39543 14.522 8.98859 16.3708C10.5817 18.2197 12.7392 19.2667 14.9936 19.2849Z" fill="#004F5D" />
+                        <path d="M14.9936 20.7161C12.7393 20.7342 10.5819 21.781 8.98871 23.6297C7.39552 25.4783 6.49481 27.9801 6.48169 30.593V40L11.7231 33.9185V30.593C11.7101 30.0856 11.785 29.5804 11.9436 29.1073C12.1021 28.6341 12.3409 28.2027 12.6459 27.8385C12.9509 27.4743 13.3159 27.1847 13.7192 26.987C14.1225 26.7893 14.556 26.6874 14.9939 26.6874C15.4318 26.6874 15.8653 26.7893 16.2686 26.987C16.6719 27.1847 17.0369 27.4743 17.3419 27.8385C17.6469 28.2027 17.8858 28.6341 18.0443 29.1073C18.2028 29.5804 18.2778 30.0856 18.2647 30.593V33.9088L23.52 39.9966V30.593C23.5019 27.9789 22.5975 25.478 21.0022 23.6301C19.4069 21.7822 17.249 20.7356 14.9936 20.7161Z" fill="#004F5D" />
+                        <path d="M30 0.00368708H24.7551V9.40701C24.7487 11.7272 24.1259 13.9887 22.9714 15.8841C21.8169 17.7795 20.1868 19.2168 18.3027 20.0005C20.1868 20.7838 21.8171 22.2208 22.9716 24.1161C24.1261 26.0114 24.7489 28.2729 24.7551 30.593V39.9966H30V0.00368708Z" fill="url(#paint1_linear_1_2)" />
+                    </g>
+                    <defs>
+                        <linearGradient id="paint0_linear_1_2" x1="5.84867" y1="0.000983323" x2="5.84867" y2="40" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#0D988C" />
+                            <stop offset="0.0001" stop-color="#0D988C" stop-opacity="0.5" />
+                            <stop offset="1" stop-color="#0D988C" stop-opacity="0" />
+                        </linearGradient>
+                        <linearGradient id="paint1_linear_1_2" x1="24.1513" y1="0.00368708" x2="24.1513" y2="39.9966" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#0D988C" />
+                            <stop offset="0.0001" stop-color="#0D988C" stop-opacity="0.5" />
+                            <stop offset="1" stop-color="#0D988C" stop-opacity="0" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+
+                <ul class="navbar-nav col-lg-6 justify-content-lg-center">
+                    @foreach(Hyperlink hl in HomeModel.DEFAULT.NavBar)
+                    {
+                        if(hl.HasChild)
+                        {
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="@hl.Reference" data-bs-toggle="dropdown" aria-expanded="false">@hl.Label</a>
+                            <ul class="dropdown-menu">
+                            @foreach(Hyperlink child_hl in hl.Children)
+                            {
+                                <li><a class="dropdown-item @child_hl.Class" href="@child_hl.Reference">@child_hl.Label</a></li>
+                            }
+                            </ul>
+                        </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item" disabled>
+                                <a class="nav-link @hl.Class" aria-current="page" href="@hl.Reference" aria-disabled="true">@hl.Label</a>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <main role="main">
+            @RenderBody()
+        </main>
+    </div>
+    <footer class="footer text-muted bg-body-tertiary rounded shadow">
+        <div class="container">
+            &copy; 2023 - Hakan Tek - <a href="/privacy" class="link-secondary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">Privacy</a>
+
+        </div>
+    </footer>
+    <script src="~/js/color-modes.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,19 @@
+﻿@using Microsoft.EntityFrameworkCore;
+@using MyWebBlogger.Domain.Posts
+<div class="container text-center">
+    <div class="row column-gap-4 row-gap-4">
+        @foreach (Post post in Model)
+        {
+            <div class="col-5">
+                <div class="card">
+                    <div class="card-header">@post.Title</div>
+                    <div class="card-body">
+                        <h6 class="card-subtitle mb-2 text-muted text-end">@post.CreatedDate?.ToString("MMM yyyy")</h6>
+                        <p class="card-text text-start">@post.Description</p>
+                        <a href="" class="card-link">More..</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
